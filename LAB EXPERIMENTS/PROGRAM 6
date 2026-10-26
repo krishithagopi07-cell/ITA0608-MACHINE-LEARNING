@@ -1,0 +1,21 @@
+from collections import Counter
+
+actual = ['Yes', 'No', 'Yes', 'No', 'Yes', 'No']
+predicted = ['Yes', 'No', 'Yes', 'Yes', 'Yes', 'No']
+
+classes = ['Yes', 'No']
+cm = [[0, 0], [0, 0]]
+
+for a, p in zip(actual, predicted):
+    cm[classes.index(a)][classes.index(p)] += 1
+
+print("Confusion Matrix:")
+print("          Predicted")
+print("          Yes  No")
+for i, label in enumerate(classes):
+    print(label, "     ", cm[i])
+
+correct = sum(a == p for a, p in zip(actual, predicted))
+accuracy = correct / len(actual) * 100
+
+print("Accuracy:", round(accuracy, 2), "%")
