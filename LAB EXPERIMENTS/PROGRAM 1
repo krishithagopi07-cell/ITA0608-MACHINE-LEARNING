@@ -1,0 +1,16 @@
+data = [
+    (["Sunny", "Warm", "Normal"], "Yes"),
+    (["Sunny", "Warm", "High"], "Yes"),
+    (["Rainy", "Cold", "High"], "No"),
+    (["Sunny", "Warm", "High"], "Yes")
+]
+hypothesis = None
+for features, label in data:
+    if label == "Yes":
+        if hypothesis is None:
+            hypothesis = features[:]
+        else:
+            for i in range(len(hypothesis)):
+                if hypothesis[i] != features[i]:
+                    hypothesis[i] = "?"
+print("Most specific hypothesis:", hypothesis)
