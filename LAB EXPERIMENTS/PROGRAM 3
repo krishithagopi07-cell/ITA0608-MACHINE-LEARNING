@@ -1,0 +1,77 @@
+
+import math
+from collections import Counter
+from pprint import pprint
+
+# Dataset: Weather, Temperature, Play
+data = [
+    ['Sunny', 'Hot', 'No'],
+    ['Sunny', 'Cool', 'Yes'],
+    ['Rainy', 'Hot', 'No'],
+    ['Rainy', 'Cool', 'Yes'],
+    ['Overcast', 'Mild', 'Yes'],
+    ['Overcast', 'Hot', 'Yes'],
+    ['Sunny', 'Mild', 'Yes'],
+    ['Rainy', 'Mild', 'Yes']
+]
+
+attributes = ['Weather', 'Temperature']
+
+def entropy(rows):
+    labels = [row[-1] for row in rows]
+    total = len(labels)
+    counts = Counter(labels)
+    return -sum((n / total) * math.log2(n / total)
+                for n in counts.values())
+
+def information_gain(rows, index):
+    total_entropy = entropy(rows)
+    values = set(row[index] for row in rows)
+    weighted_entropy = 0
+
+    for value in values:
+        subset = [row for row in rows if row[index] == value]
+        weighted_entropy += (len(subset) / len(rows)) * entropy(subset)
+
+    return total_entropy - weighted_entropy
+
+def id3(rows, attrs, indices):
+    labels = [row[-1] for row in rows]
+
+    if len(set(labels)) == 1:
+        return labels[0]
+
+    if not attrs:
+        return Counter(labels).most_common(1)[0][0]
+
+    best = max(attrs, key=lambda i: information_gain(rows, i))
+    tree = {attributes[best]: {}}
+
+    for value in set(row[best] for row in rows):
+        subset = [row for row in rows if row[best] == value]
+        remaining = [i for i in attrs if i != best]
+        tree[attributes[best]][value] = id3(subset, remaining, indices)
+
+    return tree
+
+tree = id3(data, [0, 1], [])
+
+print("Decision Tree:")
+pprint(tree)
+
+def predict(tree, sample):
+    if isinstance(tree, str):
+        return tree
+
+    attribute = next(iter(tree))
+    index = attributes.index(attribute)
+    value = sample[index]
+
+    if value in tree[attribute]:
+        return predict(tree[attribute][value], sample)
+
+    return "Unknown"
+
+sample = ['Sunny', 'Hot']
+print("\nNew Sample: Weather=Sunny, Temperature=Hot")
+print("Prediction:", predict(tree, sample))
