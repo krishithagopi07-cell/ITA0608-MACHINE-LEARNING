@@ -1,0 +1,66 @@
+
+import math
+import random
+
+random.seed(1)
+
+# XOR training dataset
+data = [
+    ([0, 0], 0),
+    ([0, 1], 1),
+    ([1, 0], 1),
+    ([1, 1], 0)
+]
+
+def sigmoid(x):
+    return 1 / (1 + math.exp(-x))
+
+# Initialize weights and biases
+w1 = [[random.uniform(-1, 1) for _ in range(2)] for _ in range(2)]
+b1 = [0.0, 0.0]
+w2 = [random.uniform(-1, 1) for _ in range(2)]
+b2 = 0.0
+lr = 0.5
+
+# Train the network using backpropagation
+for epoch in range(20000):
+    for inputs, target in data:
+        h = [sigmoid(sum(inputs[i] * w1[j][i]
+                         for i in range(2)) + b1[j])
+             for j in range(2)]
+
+        output = sigmoid(sum(h[j] * w2[j] for j in range(2)) + b2)
+
+        # Output layer error
+        delta_out = (target - output) * output * (1 - output)
+
+        # Hidden layer errors
+        delta_hidden = [
+            h[j] * (1 - h[j]) * w2[j] * delta_out
+            for j in range(2)
+        ]
+
+        # Update output weights
+        for j in range(2):
+            w2[j] += lr * delta_out * h[j]
+        b2 += lr * delta_out
+
+        # Update hidden weights
+        for j in range(2):
+            for i in range(2):
+                w1[j][i] += lr * delta_hidden[j] * inputs[i]
+            b1[j] += lr * delta_hidden[j]
+
+# Test the trained network
+print("ANN using Backpropagation")
+print("Input\tTarget\tPredicted")
+
+for inputs, target in data:
+    h = [sigmoid(sum(inputs[i] * w1[j][i]
+                     for i in range(2)) + b1[j])
+         for j in range(2)]
+
+    output = sigmoid(sum(h[j] * w2[j] for j in range(2)) + b2)
+    prediction = 1 if output >= 0.5 else 0
+
+    print(inputs, "\t", target, "\t", prediction)
