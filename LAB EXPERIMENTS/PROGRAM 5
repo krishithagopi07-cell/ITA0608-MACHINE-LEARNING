@@ -1,0 +1,49 @@
+
+import math
+
+# Training dataset: (Height, Weight, Class)
+data = [
+    (150, 50, 'Short'),
+    (160, 55, 'Short'),
+    (170, 65, 'Tall'),
+    (180, 80, 'Tall'),
+    (155, 52, 'Short'),
+    (175, 75, 'Tall')
+]
+
+k = 3
+
+# New sample to classify
+new_sample = (165, 60)
+
+# Calculate Euclidean distance
+distances = []
+
+for height, weight, label in data:
+    distance = math.sqrt(
+        (height - new_sample[0]) ** 2 +
+        (weight - new_sample[1]) ** 2
+    )
+    distances.append((distance, label))
+
+# Sort by distance
+distances.sort(key=lambda x: x[0])
+
+# Select the k nearest neighbours
+neighbors = distances[:k]
+
+# Count class votes
+votes = {}
+for distance, label in neighbors:
+    votes[label] = votes.get(label, 0) + 1
+
+# Predict the majority class
+prediction = max(votes, key=votes.get)
+
+print("New Sample:", new_sample)
+print("K =", k)
+print("Nearest Neighbours:")
+for distance, label in neighbors:
+    print(label, "- Distance:", round(distance, 2))
+
+print("Predicted Class:", prediction)
