@@ -1,0 +1,10 @@
+from math import sqrt
+
+X = [[1, 1], [2, 2], [3, 3], [8, 8], [9, 9]]
+y = ["Setosa", "Setosa", "Setosa", "Virginica", "Virginica"]
+
+test = [2, 3]
+dist = [sqrt(sum((a-b)**2 for a,b in zip(row,test))) for row in X]
+
+idx = sorted(range(len(dist)), key=lambda i: dist[i])[:3]
+print("Flower:", max(set(y[i] for i in idx), key=[y[i] for i in idx].count))
