@@ -1,0 +1,14 @@
+x = [[0, 0], [0, 1], [1, 0], [1, 1]]
+y = [0, 0, 0, 1]
+
+w1, w2, b = 0, 0, 0
+
+for _ in range(10):
+    for (a, c), target in zip(x, y):
+        pred = int(w1*a + w2*c + b > 0)
+        error = target - pred
+        w1 += error*a
+        w2 += error*c
+        b += error
+
+print("Prediction:", int(w1*1 + w2*1 + b > 0))
