@@ -1,0 +1,6 @@
+sales = [1000, 2000, 3000, 4000, 5000]
+
+avg = sum(sales)/len(sales)
+future = avg + 1000
+
+print("Future Sales:", future)
