@@ -1,0 +1,8 @@
+ram = int(input("Enter RAM in GB: "))
+
+if ram <= 3:
+    print("Price: Low")
+elif ram <= 6:
+    print("Price: Medium")
+else:
+    print("Price: High")
