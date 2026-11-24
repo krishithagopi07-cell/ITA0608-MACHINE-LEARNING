@@ -1,0 +1,5 @@
+age = int(input("Enter car age: "))
+
+price = 1000000 - (age * 100000)
+
+print("Car Price:", price)
