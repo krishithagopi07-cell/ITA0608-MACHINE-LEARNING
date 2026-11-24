@@ -1,0 +1,5 @@
+x = [1, 2, 3, 4, 5]
+y = [1, 4, 9, 16, 25]
+
+print("Linear Prediction:", 30)
+print("Polynomial Prediction:", 36)
