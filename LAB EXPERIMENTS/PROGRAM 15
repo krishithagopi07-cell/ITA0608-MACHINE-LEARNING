@@ -1,0 +1,9 @@
+X = [[1, 2], [2, 3], [3, 4], [8, 9], [9, 10]]
+y = ["Setosa", "Setosa", "Setosa", "Virginica", "Virginica"]
+
+test = [2, 3]
+
+if sum(test) < 10:
+    print("Flower: Setosa")
+else:
+    print("Flower: Virginica")
