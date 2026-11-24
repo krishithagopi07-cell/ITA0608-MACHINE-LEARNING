@@ -1,0 +1,5 @@
+area = int(input("Enter house area: "))
+
+price = area * 2000
+
+print("House Price:", price)
