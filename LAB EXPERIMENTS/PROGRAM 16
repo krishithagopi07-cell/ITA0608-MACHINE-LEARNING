@@ -1,0 +1,9 @@
+actual = [1, 0, 1, 0, 1]
+
+knn = [1, 0, 1, 0, 1]
+dt = [1, 1, 1, 0, 1]
+nb = [1, 0, 0, 0, 1]
+
+for name, pred in [("KNN", knn), ("Decision Tree", dt), ("Naive Bayes", nb)]:
+    correct = sum(a == b for a, b in zip(actual, pred))
+    print(name, "Accuracy:", correct/len(actual)*100, "%")
