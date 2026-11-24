@@ -1,0 +1,11 @@
+import math
+
+x = [1, 2, 3, 4, 5]
+y = [0, 0, 0, 1, 1]
+
+w = 1
+b = -3
+
+for i in x:
+    p = 1 / (1 + math.exp(-(w*i+b)))
+    print(i, round(p, 2), "Class:", int(p >= 0.5))
